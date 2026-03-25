@@ -38,7 +38,6 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-// Index on email
-userSchema.index({ email: 1 });
+// The unique: true property on the email field automatically handles indexing
 
 module.exports = mongoose.model('User', userSchema);
