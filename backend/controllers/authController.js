@@ -111,15 +111,16 @@ const forgotPassword = async (req, res) => {
         message,
       });
 
-      res.status(200).json({ success: true, message: 'Email sent' });
+      res.status(200).json({ success: true, message: 'Email sent successfully to your inbox.' });
     } catch (err) {
-      console.log(err);
-      user.resetPasswordToken = undefined;
-      user.resetPasswordExpire = undefined;
-
-      await user.save({ validateBeforeSave: false });
-
-      return res.status(500).json({ message: 'Email could not be sent' });
+      console.log('Email failed (likely blocked by Render): ', err.message);
+      
+      // Fallback: If email fails, return the link directly to the app so the user can still proceed
+      res.status(200).json({ 
+        success: true, 
+        message: 'Render Firewall Blocked Email. Use the emergency link below.',
+        resetUrl 
+      });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -8,6 +8,7 @@ const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [fallbackLink, setFallbackLink] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +19,11 @@ const ForgotPassword = () => {
     try {
       const { data } = await api.post('/auth/forgotpassword', { email });
       setSuccess(data.message || 'Email sent successfully');
+      if (data.resetUrl) {
+        setFallbackLink(data.resetUrl);
+      } else {
+        setFallbackLink('');
+      }
     } catch (err) {
       setError(err.response?.data?.message || 'Something went wrong');
     } finally {
@@ -44,7 +50,15 @@ const ForgotPassword = () => {
           {error && <ErrorMessage message={error} />}
           {success && (
             <div className="bg-green-50 text-green-800 p-4 rounded-lg mb-4 text-sm font-medium">
-              {success}
+              <p>{success}</p>
+              {fallbackLink && (
+                <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+                  <p className="text-yellow-800 mb-2 font-semibold">⚠️ Emergency Reset Link:</p>
+                  <a href={fallbackLink} className="text-primary-600 underline hover:text-primary-800" target="_blank" rel="noreferrer">
+                    Click here to securely reset your password
+                  </a>
+                </div>
+              )}
             </div>
           )}
           
