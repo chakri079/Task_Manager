@@ -105,6 +105,12 @@ const forgotPassword = async (req, res) => {
     const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Please make a PUT request to: \n\n ${resetUrl}`;
 
     try {
+      // In production (Render free tier), we know SMTP is blocked. 
+      // Skip the 60-second waiting period and trigger the fallback instantly.
+      if (process.env.NODE_ENV === 'production') {
+        throw new Error('Production deployment firewall enabled - skipping timeout');
+      }
+
       await sendEmail({
         email: user.email,
         subject: 'Password reset token',

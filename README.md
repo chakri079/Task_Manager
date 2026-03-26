@@ -6,6 +6,9 @@ A complete MERN stack (MongoDB, Express, React, Node.js) Task Management web app
 
 ### Authentication
 - User Signup & Login
+- Strong Passwords Enforcement (8+ chars, upper, lower, numbers, special symbols)
+- Forgot Password & Secure Password Reset Flow (via automated Email)
+- Render Free Tier Firewall Fallback (graceful UI links if SMTP gets blocked)
 - JWT-based authentication
 - Password hashing with bcrypt
 - Protected routes
@@ -111,6 +114,15 @@ PORT=5000
 MONGO_URI=mongodb+srv://chakreshpatha_db_user:H7AprzS3bJjFOnrf@cluster0.qzv5wye.mongodb.net/task-manager?retryWrites=true&w=majority
 JWT_SECRET=supersecretjwtkey2024taskmanager
 NODE_ENV=development
+
+# Email configuration for Forgot Password feature
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_EMAIL=hitman10035@gmail.com
+SMTP_PASSWORD=your_gmail_app_password
+FROM_NAME="Task Manager Admin"
+FROM_EMAIL=hitman10035@gmail.com
+FRONTEND_URL=http://localhost:5173
 ```
 
 ### 3. Database Design & Indexing
@@ -142,6 +154,8 @@ npm run dev
 - `POST /api/auth/register` - Create new user
 - `POST /api/auth/login` - Authenticate user & get token
 - `GET /api/auth/me` - Get current user profile
+- `POST /api/auth/forgotpassword` - Send password reset email to user
+- `PUT /api/auth/resetpassword/:resettoken` - Submit new password and reset token
 
 **Tasks**
 - `GET /api/tasks/stats` - Get analytic metrics (Total, Completed, percentages, breakdowns)
