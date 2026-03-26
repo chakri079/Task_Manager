@@ -22,6 +22,12 @@ const Register = () => {
       return;
     }
 
+    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!strongPasswordRegex.test(password)) {
+      setValidationError('Password must be at least 8 characters, contain one uppercase, one lowercase, one number and one special character');
+      return;
+    }
+
     try {
       await register(name, email, password);
       navigate('/dashboard');
