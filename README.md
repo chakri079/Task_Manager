@@ -102,28 +102,7 @@ npm install
 # Frontend setup
 cd ../frontend
 npm install
-```
 
-### 2. Environment Variables
-
-Create a `.env` file in the `backend/` directory with the following variables:
-
-```env
-PORT=5000
-# Update with your MongoDB Atlas URI
-MONGO_URI=mongodb+srv://chakreshpatha_db_user:H7AprzS3bJjFOnrf@cluster0.qzv5wye.mongodb.net/task-manager?retryWrites=true&w=majority
-JWT_SECRET=supersecretjwtkey2024taskmanager
-NODE_ENV=development
-
-# Email configuration for Forgot Password feature
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_EMAIL=hitman10035@gmail.com
-SMTP_PASSWORD=your_gmail_app_password
-FROM_NAME="Task Manager Admin"
-FROM_EMAIL=hitman10035@gmail.com
-FRONTEND_URL=http://localhost:5173
-```
 
 ### 3. Database Design & Indexing
 
